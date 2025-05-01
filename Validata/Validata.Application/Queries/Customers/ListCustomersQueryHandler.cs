@@ -10,6 +10,7 @@ namespace Validata.Application.Queries.Customers
         public async Task<List<CustomerDto>> Handle(ListCustomersQuery request, CancellationToken cancellationToken)
         {
             var customers = await unitOfWork.Customers.GetAllAsync();
+
             return mapper.Map<List<CustomerDto>>(customers);
         }
     }

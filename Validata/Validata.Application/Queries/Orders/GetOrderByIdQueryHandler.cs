@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Validata.Application.Dtos;
 using Validata.Application.Interfaces;
@@ -21,7 +21,7 @@ namespace Validata.Application.Handlers.Orders
             {
                 logger.LogWarning("Order not found: {OrderId}", request.OrderId);
 
-                return null;
+                return null!;
             }
 
             return mapper.Map<OrderDto>(order);
