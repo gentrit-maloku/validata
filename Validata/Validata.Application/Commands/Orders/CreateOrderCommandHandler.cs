@@ -13,22 +13,10 @@ namespace Validata.Application.Commands.Orders
             if (customer == null)
                 throw new ArgumentException("Customer not found");
 
-            var orderItems = new List<OrderItem>();
-
-            foreach (var item in request.Items)
-            {
-                var product = await unitOfWork.Products.GetByIdAsync(item.ProductId);
-
-                if (product == null)
-                    throw new ArgumentException($"Product with ID {item.ProductId} not found");
-
-                if (item.ProductPrice != product.Price)
-                    throw new ArgumentException($"Price mismatch for product {product.Name}");
-
-                orderItems.Add(new OrderItem(product, item.Quantity));
-            }
+            var orderItems = request.Items.Select(dto => new OrderItem(new Product(dto.ProductName, dto.ProductPrice), dto.Quantity)).ToList();
 
             var order = new Order(request.OrderDate, orderItems);
+            customer.AddOrder(order);
 
             await unitOfWork.Orders.AddAsync(order);
             await unitOfWork.SaveChangesAsync(cancellationToken);

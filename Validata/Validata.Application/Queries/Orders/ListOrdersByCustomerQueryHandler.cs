@@ -21,6 +21,7 @@ namespace Validata.Application.Handlers.Orders
                 Items = order.Items.Select(i => new OrderItemDto
                 {
                     ProductId = i.Product.Id,
+                    ProductPrice = i.Product.Price,
                     ProductName = i.Product.Name,
                     Quantity = i.Quantity
                 }).ToList()
