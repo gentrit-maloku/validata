@@ -22,10 +22,13 @@ namespace Validata.Application.Commands.Orders
                 if (product == null)
                     throw new ArgumentException($"Product with ID {item.ProductId} not found");
 
+                if (item.ProductPrice != product.Price)
+                    throw new ArgumentException($"Price mismatch for product {product.Name}");
+
                 orderItems.Add(new OrderItem(product, item.Quantity));
             }
 
-            var order = new Order(request.CustomerId, request.OrderDate, orderItems);
+            var order = new Order(request.OrderDate, orderItems);
 
             await unitOfWork.Orders.AddAsync(order);
             await unitOfWork.SaveChangesAsync(cancellationToken);
@@ -33,4 +36,5 @@ namespace Validata.Application.Commands.Orders
             return order.Id;
         }
     }
+
 }

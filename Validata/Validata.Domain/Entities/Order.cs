@@ -16,10 +16,9 @@
 
         private Order() { }
 
-        public Order(Guid customerId, DateTime orderDate, List<OrderItem> items)
+        public Order(DateTime orderDate, List<OrderItem> items)
         {
             if (items == null || !items.Any()) throw new ArgumentException("Order must have at least one item.");
-            CustomerId = customerId;
             OrderDate = orderDate;
             Id = Guid.NewGuid();
             _items = items;

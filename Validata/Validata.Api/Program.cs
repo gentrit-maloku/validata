@@ -1,4 +1,6 @@
 using Asp.Versioning;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Validata.Api.Middleware;
@@ -35,7 +37,16 @@ builder.Services.AddDbContext<ValidataDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(CustomerProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(OrderProfile).Assembly);
 
+builder.Services.AddFluentValidationAutoValidation()
+      .AddFluentValidationClientsideAdapters();
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreateCustomerCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<DeleteCustomerCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateCustomerCommandValidator>();
+
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 // Add services to the container.
 builder.Services.AddControllers().AddXmlSerializerFormatters();

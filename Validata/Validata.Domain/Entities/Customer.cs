@@ -46,5 +46,11 @@
             Address = address;
             PostalCode = postalCode;
         }
+
+        public void RemoveOrder(Guid orderId)
+        {
+            var order = Orders.FirstOrDefault(o => o.Id == orderId);
+            if (order != null) _orders.Remove(order);
+        }
     }
 }
