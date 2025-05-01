@@ -11,7 +11,7 @@ namespace Validata.Application.Handlers.Orders
     {
         public async Task<List<OrderDto>> Handle(ListOrdersByCustomerQuery request, CancellationToken cancellationToken)
         {
-            var orders = await unitOfWork.Orders.GetByCustomerIdAsync(request.CustomerId);
+            var orders = await unitOfWork.Orders.GetByCustomerIdAsync(request.CustomerId, sortByOrderDate: request.SortOrder == "desc");
 
             return mapper.Map<List<OrderDto>>(orders);
         }

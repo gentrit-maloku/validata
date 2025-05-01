@@ -4,7 +4,7 @@ namespace Validata.Application.Interfaces
 {
     public interface IOrderRepository
     {
-        Task<List<Order>> GetByCustomerIdAsync(Guid customerId);
+        Task<List<Order>> GetByCustomerIdAsync(Guid customerId, bool sortByOrderDate);
 
         Task<Order?> GetByIdAsync(Guid id);
 

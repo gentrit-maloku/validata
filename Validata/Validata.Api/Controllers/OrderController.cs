@@ -47,9 +47,16 @@ namespace Validata.Api.Controllers
         /// Gets all orders for a customer.
         /// </summary>
         [HttpGet("customer/{customerId}")]
-        public async Task<IActionResult> GetCustomerOrders(Guid customerId)
+        public async Task<IActionResult> GetCustomerOrders(Guid customerId, [FromQuery] string sortOrder = "asc")
         {
-            var query = new ListOrdersByCustomerQuery { CustomerId = customerId };
+            bool isSortDescending = sortOrder.ToLower() == "desc";
+
+            var query = new ListOrdersByCustomerQuery
+            {
+                CustomerId = customerId,
+                SortOrder = sortOrder
+            };
+
             var orders = await mediator.Send(query);
 
             return Ok(orders);

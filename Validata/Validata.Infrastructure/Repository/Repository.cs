@@ -17,7 +17,7 @@ namespace Validata.Infrastructure.Repository
 
         public async Task<T?> GetByIdAsync(Guid id) => await _entities.FindAsync(id);
 
-        public async Task<IEnumerable<T>> GetAllAsync() => await _entities.ToListAsync();
+        public async Task<IEnumerable<T>> GetAllAsync() => await _entities.AsNoTracking().ToListAsync();
 
         public async Task AddAsync(T entity) => await  _entities.AddAsync(entity);
 
